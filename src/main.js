@@ -1,8 +1,13 @@
 import Vue from 'vue'
 import VueRouter from 'vue-router'
+import axios from 'axios'
 import App from './App.vue'
 // 引入抽离得 路由组件
 import { routes } from './routes'
+//https://wd5014675358wlahmy.wilddogio.com/ 野狗云数据地址
+
+// 引入 axios 
+axios.defaults.baseURL= 'https://wd5014675358wlahmy.wilddogio.com/'
 Vue.use(VueRouter)
 const router = new VueRouter({
   routes,

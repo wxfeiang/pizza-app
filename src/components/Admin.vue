@@ -1,31 +1,87 @@
 <template>
-<h1>
-    admin
-</h1>
+   <div class="row">
+       <div class="col-sm-12 col-md-8">
+           <!-- new -pizza -->
+           <appNewpizza></appNewpizza>
+       </div>
+       <div class="col-sm-12 col-md-4">
+           <!-- show -pizza -->
+           <h3 class="text-muted my-5">菜单</h3>
+           <table class="table table-hover">
+               <thead class="table table-defult">
+                   <tr>
+                       <th>品种</th>
+                       <th>删除</th>
+                   </tr>
+               </thead>
+               <tbody v-for="item in getMenuitem" :key="item.key">
+                   <tr>
+                       <td>{{item.name}}</td>
+                       <td><button @click="deledata(item)" class="btn btn-outline-danger btn-sm">&times</button></td>
+                   </tr>
+               </tbody>
+           </table>
+
+
+       </div>
+   </div>
 </template>
 <script>
+import Newpizza from './Newpizza';
 export default {
+    components:{
+      appNewpizza: Newpizza //注册组件 冲突标签 驼峰直接写
+
+    },
     data(){
         return {
-            name: '王鹏'
+            getMenuitem:[]   //  获取到得 数据
         }
     },
-    //  进入组件
-  /*  beforeRouteEnter: (to,from ,next) =>{
-        // 数据渲染完 哪数据
-       //alert('hellow'+ this.name ); 
-        next(vm =>{
-           alert('hellow'+ vm.name +'组件内守卫'); 
-        })
+    //  后置钩子  进入路由
 
-    }, */
-    // 离开组件
-   beforeRouteLeave (to, from, next) {
-       if(confirm('骚年,确定离开嘛')== true){
-           next();
-       }else{
-           next(false);
-       }
-   }
+    created(){
+         fetch("https://wd5014675358wlahmy.wilddogio.com/menu.json")
+         .then(res=>{
+             return res.json()
+         })
+         .then(data =>{
+             //console.log(data)
+             let menuArry= [];
+             for(let key in data){
+
+                 //  console.log(data[key])
+
+                 data[key].id= key;
+               //  console.log(data[key].id)
+                 menuArry.push(data[key])
+             }
+             this.getMenuitem = menuArry;
+         })
+
+    },
+    methods:{
+        // 删除对应得数据
+    deledata(item){
+            fetch("https://wd5014675358wlahmy.wilddogio.com/menu/"+item.id+"/.json",{
+           
+                 method:"DELETE",
+                headers:{
+                    'Content-type':'application/json'
+                }
+
+             })
+              .then(res => res.json())
+              .then(data => this.$router.push({name: "menuLink"}))
+             //.then(data => console.log(data))
+              .catch(err => console.log(err))
+    }
+
+       
+    }
+ 
+
+
+
 }
 </script>

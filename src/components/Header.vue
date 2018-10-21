@@ -25,12 +25,12 @@
 export default {
   name: "Header",
   data(){
-    //   return {
+      return {
     //       //  动态改变路由 在标签里 :to 属性写变量
     //       homeLink: "/"
-    //   }
+      }
   }
-};
+}
     
 </script>
 <style lang="sass" scoped>

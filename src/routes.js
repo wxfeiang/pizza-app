@@ -38,7 +38,7 @@ export const routes = [
       },
     {
       path: '/menu',
-      name: 'menu',
+      name: 'menuLink',
       component: Menu
     },
     {
@@ -54,6 +54,7 @@ export const routes = [
     },
     {
       path: '/Login',
+      name: "LoginLink",
       component: Login
     },
     {
@@ -95,6 +96,7 @@ export const routes = [
     },
     {
       path: '/register',
+      name: "RegisterLink",
       component: Register
     },
   
