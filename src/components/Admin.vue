@@ -14,7 +14,7 @@
                        <th>删除</th>
                    </tr>
                </thead>
-               <tbody v-for="item in getMenuitem" :key="item.key">
+               <tbody v-for="item in getMenuitems" :key="item.key">
                    <tr>
                        <td>{{item.name}}</td>
                        <td><button @click="deledata(item)" class="btn btn-outline-danger btn-sm">&times</button></td>
@@ -35,11 +35,19 @@ export default {
     },
     data(){
         return {
-            getMenuitem:[]   //  获取到得 数据
+           // getMenuitems:[]   //  获取到得 数据
         }
     },
-    //  后置钩子  进入路由
 
+
+    computed:{
+        getMenuItems(){
+        // 在 vuex 中获取数据
+            return this.$store.state.menuItems;
+        },
+
+    },
+    //  后置钩子  进入路由
     created(){
          fetch("https://wd5014675358wlahmy.wilddogio.com/menu.json")
          .then(res=>{
@@ -56,7 +64,7 @@ export default {
                //  console.log(data[key].id)
                  menuArry.push(data[key])
              }
-             this.getMenuitem = menuArry;
+             this.getMenuitems = menuArry;
          })
 
     },
@@ -80,7 +88,6 @@ export default {
        
     }
  
-
 
 
 }

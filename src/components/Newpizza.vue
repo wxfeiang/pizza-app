@@ -41,7 +41,7 @@
         </div>
 
         <div class=" from-group row">
-            <button @click="addMenuitem" class="btn btn-success btn-block" type="button">提交</button>
+            <button @click="addMenuitem" class="btn btn-success btn-block" type="button">添加</button>
             </div>
     </form>
 </template>
@@ -64,11 +64,11 @@ export default {
                decion: this.newpizza.decion,
                options:[
                    {
-                       size: this.newpizza.size,
+                        size: this.newpizza.size1,
                         price: this.newpizza.price1
                     },
                     {
-                       size: this.newpizza.size1,
+                        size: this.newpizza.size2,
                         price: this.newpizza.price2
                     }
                ]

@@ -12,11 +12,11 @@
                    <th>加入</th>
                </tr>
            </thead>
-           <tbody v-for="items in getMenuItems " :key="items.name">
+           <tbody v-for="items in getMenuItems " >
                <tr>
                    <td><strong>{{items.name}}</strong></td>
                </tr>
-               <tr v-for="option in items.options" :key="option.size">
+               <tr v-for="option in items.options" >
                    <td>
                        <strong>{{option.size}}</strong>
                        </td>
@@ -68,116 +68,97 @@
 </div>
 </template>
 <script>
+import axios from "axios";
 export default {
   data() {
     return {
       BasktText: "购物车暂时是空得",
-      Baskts:  [],
-      getMenuItems: {
-        1: {
-          name: "榴莲pizza",
-          description: "这是喜欢吃榴莲朋友的最佳选择",
-          options: [
-            {
-              size: 9,
-              price: 38
-            },
-            {
-              size: 12,
-              price: 48
-            }
-          ]
-        },
-        2: {
-          name: "芝士pizza",
-          description: "芝士杀手,浓浓的芝士丝, 食欲瞬间爆棚",
-          options: [
-            {
-              size: 9,
-              price: 38
-            },
-            {
-              size: 12,
-              price: 48
-            }
-          ]
-        },
-        3: {
-          name: "夏威夷pizza",
-          description: "众多人的默认选择",
-          options: [
-            {
-              size: 9,
-              price: 36
-            },
-            {
-              size: 12,
-              price: 46
-            }
-          ]
-        }
-      }
+      Baskts: [],
+     // getMenuItems: {}
     };
   },
+  created() {
+       this.fetchData()
+ 
+  },
   methods: {
+    // 实现
+     fetchData(){
+        // fetch("https://wd5014675358wlahmy.wilddogio.com/menu.json")
+        //   .then(res => {
+        //     return res.json()
+        //   })
+        //   .then(data => {
+        //     this.getMenuItems = data
+        //   })
+
+        // axios.get("menu.json")
+        //      .then(res => this.getMenuItems = res.data)
+
+        // this.http.get("menu.json")
+        //          .then(res => this.getMenuItems = res.data)
+
+        // 将 请求到得数据 存到 vuex 中集中管理
+         this.http.get("menu.json")
+                  .then(res =>this.$store.commit("setMenuItems", res.data))
+      },
+
+    
+
     addToBaskt(items, option) {
       let Baskt = {
         name: items.name,
         size: option.size,
         price: option.price,
-        quantity: 1,
-      }
-      if(this.Baskts.length>0){
-          // 过滤  重复添加
-       let resut=   this.Baskts.filter((Baskt)=>{
-              return (Baskt.name === items.name && Baskt.price ===option.price)
-              
-          })
+        quantity: 1
+      };
+      if (this.Baskts.length > 0) {
+        // 过滤  重复添加
+        let resut = this.Baskts.filter(Baskt => {
+          return Baskt.name === items.name && Baskt.price === option.price;
+        });
 
-          if(resut !=null && resut.length>0){
-              resut[0].quantity++;
-          }else{
-               this.Baskts.push(Baskt);
-          }
-
-      }else{
+        if (resut != null && resut.length > 0) {
+          resut[0].quantity++;
+        } else {
+          this.Baskts.push(Baskt);
+        }
+      } else {
         this.Baskts.push(Baskt);
       }
-     
-
-
-
     },
-    jian(item){
-        item.quantity--;
-        if(item.quantity<=0){
-            this.remooveitem(item);
-        }
-    },
-    jia(item){
-        item.quantity++;
-    },
-    remooveitem(item){
-        // 小于 0  移除本条信息
-        this.Baskts.splice(this.Baskts.indexOf(item),1)
-    }
-
-
-
-
-
-
-  },
-  computed:{
-      totn(){
-          let totns = 0;
-          for(let  index in this.Baskts){
-              // 拿到 每一个添加进去得对象 
-              let  indivitem = this.Baskts[index]
-              totns += indivitem.quantity * indivitem.price;
-          }
-          return totns;
+    jian(item) {
+      item.quantity--;
+      if (item.quantity <= 0) {
+        this.remooveitem(item);
       }
+    },
+    jia(item) {
+      item.quantity++;
+    },
+    remooveitem(item) {
+      // 小于 0  移除本条信息
+      this.Baskts.splice(this.Baskts.indexOf(item), 1);
+    }
+  },
+  computed: {
+   
+      // 方法
+   getMenuItems(){
+  // 在 vuex 中获取数据
+     return this.$store.state.menuItems;
+   },
+
+   //  计算总价
+    totn() {
+      let totns = 0;
+      for (let index in this.Baskts) {
+        // 拿到 每一个添加进去得对象
+        let indivitem = this.Baskts[index];
+        totns += indivitem.quantity * indivitem.price;
+      }
+      return totns;
+    }
   }
 };
 </script>

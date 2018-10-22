@@ -4,10 +4,14 @@ import axios from 'axios'
 import App from './App.vue'
 // 引入抽离得 路由组件
 import { routes } from './routes'
+
+import { store } from './store/store.js'
 //https://wd5014675358wlahmy.wilddogio.com/ 野狗云数据地址
 
 // 引入 axios 
 axios.defaults.baseURL= 'https://wd5014675358wlahmy.wilddogio.com/'
+// 配置 vue 原型  http 自定   在任何组件都可以使用
+Vue.prototype.http = axios
 Vue.use(VueRouter)
 const router = new VueRouter({
   routes,
@@ -17,6 +21,7 @@ const router = new VueRouter({
   }
 
 })
+
 //  全局守卫 调用router对象  进入组件之前
 /* router.beforeEach((to, from, next) => {
 
@@ -54,5 +59,6 @@ const router = new VueRouter({
 new Vue({
   el: '#app',
   router,
+  store,
   render: h => h(App)
 })

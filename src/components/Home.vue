@@ -29,7 +29,7 @@ export default {
       //  this.$router.replace({name:'menu'})
       //  最常用的 通过 push 进行跳转 更多
       // this.$router.push('/menu')
-      this.$router.push({ name: "menu" });
+      this.$router.push({ name: "menuLink" });
     }
   }
 };
