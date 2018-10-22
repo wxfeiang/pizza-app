@@ -14,7 +14,7 @@
                        <th>删除</th>
                    </tr>
                </thead>
-               <tbody v-for="item in getMenuitems" :key="item.key">
+               <tbody v-for="item in getMenuItems" >
                    <tr>
                        <td>{{item.name}}</td>
                        <td><button @click="deledata(item)" class="btn btn-outline-danger btn-sm">&times</button></td>
@@ -35,18 +35,25 @@ export default {
     },
     data(){
         return {
-           // getMenuitems:[]   //  获取到得 数据
+             //  获取到得 数据
+          //  getMenuItems:[]
         }
     },
-
-
     computed:{
-        getMenuItems(){
-        // 在 vuex 中获取数据
-            return this.$store.state.menuItems;
+        getMenuItems:{
+        // 在vuex中获取数据
+        get(){
+          // return this.$store.state.menuItems
+          // 通过getters获取数据
+          return this.$store.getters.getMenuItems
         },
+        set(){
+
+        }
+      }
 
     },
+
     //  后置钩子  进入路由
     created(){
          fetch("https://wd5014675358wlahmy.wilddogio.com/menu.json")
@@ -64,7 +71,9 @@ export default {
                //  console.log(data[key].id)
                  menuArry.push(data[key])
              }
-             this.getMenuitems = menuArry;
+             // 数据同步  到 vuex 
+             this.$store.commit("setMenuItems",menuArry)
+           //  this.getMenuItems = menuArry;
          })
 
     },
@@ -80,7 +89,10 @@ export default {
 
              })
               .then(res => res.json())
-              .then(data => this.$router.push({name: "menuLink"}))
+
+                // 刷新 
+                .then(data => this.$store.commit("removeMenuItems",item))
+              //.then(data => this.$router.push({name: "menuLink"}))
              //.then(data => console.log(data))
               .catch(err => console.log(err))
     }
