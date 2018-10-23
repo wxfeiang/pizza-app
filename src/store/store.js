@@ -2,25 +2,37 @@
 import Vue from 'vue'
 import Vuex from 'vuex'
 
+
+//   引入抽离的文件
+import  menu  from './module/menu'
+import  status  from './module/status'
+import  users  from './module/users'
+
 Vue.use(Vuex)
 
 export const store = new Vuex.Store({
-    state:{
+
+    modules:{
+        menu,
+        status,
+        users,
+    }
+   /*  state:{
         // 设置属性
         menuItems:{},
         currentUser: null,
-    isLogin:false
+        isLogin:false
 
-    },
-    getters:{
+    }, */
+  /*   getters:{
         // 获取属性状态
         getMenuItems :state =>state.menuItems,
         // 获取登录状态
         currentUser:state => state.currentUser,
         isLogin:state => state.isLogin
 
-    },
-    mutations:{
+    }, */
+   /*  mutations:{
         // 改变属性状态
         setMenuItems(state,data){
             state.menuItems = data;
@@ -52,12 +64,12 @@ export const store = new Vuex.Store({
 
         }
         
-    },
-    actions: {
-        // 应用 mutations
-        setUser({commit},user){
-            commit("userStatus",user)
-        }
+    }, */
+   /*  actions: {
+        // // 应用 mutations
+        // setUser({commit},user){
+        //     commit("userStatus",user)
+        // }
        
-    }
+    } */
 })
