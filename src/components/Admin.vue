@@ -35,15 +35,21 @@ export default {
     },
     data(){
         return {
-           // getMenuitems:[]   //  获取到得 数据
+        //   getMenuitems:[]   //  获取到得 数据
         }
     },
 
 
     computed:{
-        getMenuItems(){
-        // 在 vuex 中获取数据
-            return this.$store.state.menuItems;
+        getMenuItems:{
+            get(){
+            // 在 vuex 中获取数据
+              return this.$store.state.menuItems;
+            },
+            set(){
+
+            }
+       
         },
 
     },
