@@ -72,11 +72,10 @@ export default {
                         price: this.newpizza.price2
                     }
                ]
-//
            }
 
         //  fetch  请求数据库  es6  vue 方法
-            fetch("https://wd5014675358wlahmy.wilddogio.com/menu.json",{
+         /*    fetch("https://wd5014675358wlahmy.wilddogio.com/menu.json",{
                 method:"POST",
                 headers:{   
                     "Content-type":'application/json'
@@ -84,8 +83,22 @@ export default {
                 body:JSON.stringify(data)
             })
             .then(res => res.json())
-           .then(data => this.$router.push({name:"menuLink"}))
-           .catch(err => console.log(err))
+           
+
+         //  .then(data => this.$router.push({name:"menuLink"}))
+           .catch(err => console.log(err)) */
+
+           
+        // this.http.post("menu.json",data)
+        //          .then(res => this.$router.push({name:"menuLink"}))
+
+        // 数据同步到vuex中
+        this.http.post("menu.json",data)
+                 .then(res => this.$store.commit("pushToMenuItems",data))
+
+
+
+
         }
     }
 }

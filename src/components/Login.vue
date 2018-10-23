@@ -38,6 +38,12 @@ import axios from 'axios'
             password: "",
         }
       
+    }, 
+    //  点击退出
+  // 组件内的守卫
+    beforeRouteEnter: (to, from, next) => {
+      // this.$store.dispatch("setUser",null)
+      next(vm => vm.$store.dispatch("setUser",null))
     },
     methods:{
      onSubmit(){
@@ -60,9 +66,18 @@ import axios from 'axios'
 
             //console.log(result)  判断 result 长度
             if(result !=null && result.length>0){
+              // 登录成功  更改 store 得状态
+             // this.$store.dispacth("setUser",result[0].email)
+              this.$store.dispatch("setUser",result[0].email)
+
+
+
                 this.$router.push({name:"homeLink"})
             }else{
-                alert("账号或密码错误")
+                alert("账号或密码错误");
+                this.$store.dispatch("setUser",null)
+
+
             }
 
 

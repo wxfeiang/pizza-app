@@ -146,7 +146,9 @@ export default {
       // 方法
    getMenuItems(){
   // 在 vuex 中获取数据
-     return this.$store.state.menuItems;
+   //  return this.$store.state.menuItems;
+      // 通过getters获取数据
+        return this.$store.getters.getMenuItems
    },
 
    //  计算总价
